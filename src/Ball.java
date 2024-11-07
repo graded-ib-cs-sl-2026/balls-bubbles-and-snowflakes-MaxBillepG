@@ -22,7 +22,9 @@ class Ball {
     /** The color of the outside of the ball */
     private int borderColor;
 
-    /** Empty constructor to keep the defaults. Only sets up our link. */
+
+
+     // accessors for the radius, diameter, x, and y values 
     public Ball(Sketch sketch) {
         s = sketch;
         radius = 20;
@@ -30,7 +32,7 @@ class Ball {
         y = 100;
         xSpeed = 2;
         ySpeed = -1;
-        fillColor = s.color(255, 100, 100);
+        fillColor = s.color(180, 180, 255);
         borderColor = s.color(0, 0, 0);
     }
 
@@ -91,6 +93,33 @@ class Ball {
         if (y > s.height - radius || y < radius) {
             ySpeed = -ySpeed;
         }
+    }
+
+    /** This method switched the color, x and y speed of both ball after colliding */
+    public void bounceBalls(Ball other) {
+        float temp = xSpeed;
+        xSpeed = other.xSpeed;
+        other.xSpeed = temp;
+
+        temp = ySpeed;
+        ySpeed = other.ySpeed;
+        other.ySpeed = temp;
+
+        int color = fillColor;
+        fillColor = other.fillColor;
+        other.fillColor = color;
+
+    }
+
+    /** This method works in finding the distance between two different balls */
+    /** I figured this out by looking at processing.org and Mr. Griswold also heloed me figured this out */
+    public boolean isColliding (Ball other) {
+        float d = Sketch.dist(x, y, other.x, other.y);
+        if(d <= getRadius() + other.getRadius()) {
+            return true;
+        }
+        return false;
+
     }
 
 }
